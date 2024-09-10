@@ -1,0 +1,159 @@
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    background: #F2F6D0;
+}
+
+.footer-logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.footer-logo p{
+    color: #383838;
+    font-size: 46px;
+    font-weight: 700;
+}
+.footer-links{
+    display: flex;
+    list-style: none;
+    gap: 50px;
+    color: #252525;
+    font-size: 20px;
+
+}
+
+.footer-links li{
+    cursor: pointer;
+}
+
+.footer-social-icon{
+    display: flex;
+    gap: 20px;
+}
+
+
+.footer-copyright{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+    font-size: 20px;
+}
+
+.footer-copyright hr{
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+    height: 3px;
+    background: #c7c7c7;
+
+}
+
+.footer-social-icon{
+    display: flex;
+}
+
+.footer-icons-container {
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+    margin: 0 30px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s;
+}
+.footer-icons-container a {
+    color: inherit; /* Inherit the color from the parent element */
+    text-decoration: none; /* Remove underline from links */
+  }
+
+.footer-icons-container .fa-brands{
+    font-size: 30px;
+    line-height: 80px;
+    position: relative;
+    z-index: 10;
+    transition: color 0.5s;
+}
+
+.footer-icons-container::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: -90px;
+    left: 0;
+    background: linear-gradient(-45deg, #ed1c94, #ffec17);
+    position: absolute;
+    transition: 0.5s;
+}
+
+.footer-icons-container:hover::after{
+    top: 0px;
+}
+
+.footer-icons-container:hover .fa-brands{
+    color: #fff;
+}
+.footer-icons-container:hover .box2{
+    color: #25D366;
+}
+.footer-icons-container:hover .box3{
+    color: blue;
+}
+
+.footer-icons-container:hover{
+    transform: translateY(-10px);
+}
+
+@media(max-width:800px){
+    .footer{
+        gap: 20px;
+    }
+    .footer-logo{
+        gap: 10px;
+        align-items: end;
+    }
+    .footer-logo img{
+        width: 40px;
+    }
+    .footer-logo p{
+        font-size: 25px;
+    }
+    .footer-links{
+        font-size: 14px;
+        gap: 20px;
+    }
+    .footer-icons-container{
+        width: 7vw;
+        height: 7vh;
+    }
+    .footer-icons-container .fa-brands{
+        font-size: 30px;
+        margin-top: -13px;
+    }
+    .footer-copyright{
+        font-size: 13px;
+
+    }
+}
+
+@media(max-width: 500px){
+    .footer-icons-container{
+        width: 12vw;
+        height: 7vh;
+    }
+    .footer-icons-container .fa-brands{
+        font-size: 30px;
+        margin-top: -13px;
+    }
+}
