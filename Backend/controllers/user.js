@@ -300,3 +300,24 @@ exports.DeleteCartItems = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getRelatedProduct = (req, res, next) => {
+  try {
+    Product.find({}).then((products) => {
+      if (!products) {
+        const error = new Error("does not have any product");
+        error.statusCode = 404;
+        throw error;
+      }
+      res.json({
+        message: "All Products Fetch Successfully",
+        data: products.slice(0, 4),
+      });
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};

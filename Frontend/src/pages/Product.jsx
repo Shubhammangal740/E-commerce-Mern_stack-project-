@@ -7,10 +7,26 @@ import DescriptionBox from "../components/DescriptionBox/DescriptionBox";
 import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
 
 function Product() {
-  const { all_product } = useContext(ShopContext);
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const FetchedSinleProduct = async () => {
+  const [data, setData] = useState([]);
+  const fetchRelatedProduct = async () => {
+    await fetch("http://localhost:5000/related-product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((resData) => {
+        setData(resData.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const FetchedSinleProduct = async (productId) => {
     await fetch("http://localhost:5000/product", {
       method: "POST",
       headers: {
@@ -28,8 +44,9 @@ function Product() {
       });
   };
   useEffect(() => {
-    FetchedSinleProduct();
-  }, []);
+    FetchedSinleProduct(productId);
+    fetchRelatedProduct();
+  }, [productId]);
   return (
     <div>
       {product ? (
@@ -37,7 +54,7 @@ function Product() {
           <Breadcrum product={product}></Breadcrum>
           <ProductDisplay product={product}></ProductDisplay>
           <DescriptionBox></DescriptionBox>
-          <RelatedProducts></RelatedProducts>
+          <RelatedProducts data={data}></RelatedProducts>
         </>
       ) : (
         <p>Loading...</p>

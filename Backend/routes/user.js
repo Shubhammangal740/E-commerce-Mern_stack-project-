@@ -25,4 +25,6 @@ router.put("/cart", isAuth, userControllers.updateCart);
 
 router.delete("/cart/clear", isAuth, userControllers.DeleteCartItems);
 
+router.post("/related-product", userControllers.getRelatedProduct);
+
 module.exports = router;
