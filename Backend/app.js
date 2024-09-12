@@ -34,8 +34,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const MONGO_URL =
-  "mongodb+srv://shubham:shubham123@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce";
+const MONGO_URL = "";
 
 app.use(cors());
 
