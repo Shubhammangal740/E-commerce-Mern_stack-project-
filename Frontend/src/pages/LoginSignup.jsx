@@ -35,6 +35,7 @@ function LoginSignup() {
 
     if (responseData) {
       localStorage.setItem("auth-token", responseData.token);
+      localStorage.setItem("userId", responseData.userId);
       window.location.replace("/");
     } else {
       throw new Error("please enter a valid credentials");
@@ -51,12 +52,9 @@ function LoginSignup() {
     })
       .then((res) => res.json())
       .then((resData) => {
-        console.log(resData);
         setState("Login");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

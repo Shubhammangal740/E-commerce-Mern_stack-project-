@@ -1,10 +1,6 @@
 const Product = require("../models/product");
 const mongoose = require("mongoose");
 
-exports.getHomePage = (req, res, next) => {
-  console.log("Home Page");
-};
-
 exports.PostAddProduct = (req, res, next) => {
   const name = req.body.name;
   const image = req.body.image;
@@ -20,7 +16,6 @@ exports.PostAddProduct = (req, res, next) => {
       new_price: new_price,
     });
     product.save().then((result) => {
-      console.log(result);
       res.json({
         message: "Product Save Successfully",
         data: result,

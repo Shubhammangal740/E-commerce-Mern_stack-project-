@@ -1,0 +1,84 @@
+.order-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .order-summary {
+    margin-bottom: 20px;
+  }
+  
+  .order-items ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .item-details {
+    flex: 1;
+  }
+  
+  .order-total,
+  .order-shipping {
+    margin-top: 20px;
+  }
+  
+
+  
+  .order-buttons button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 200px;
+    height: 60px;
+    border-radius: 75px;
+    margin-top: 15px;
+    background: #ff4141;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.order-buttons button{
+    transition: all 0.2s linear 0s;
+  
+  &:before {
+    content: "\f178";
+    font-family: FontAwesome;
+    font-size: 15px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    height: 100%;
+    width: 40px;
+    transition: all 0.2s linear 0s;
+  }
+  
+  &:hover {
+    text-indent: -20px;
+    background-color: black;
+    &:before {
+      opacity: 1;
+      text-indent: 0px;
+    }
+  }
+}
+
+  

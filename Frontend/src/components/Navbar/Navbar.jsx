@@ -79,6 +79,16 @@ function Navbar() {
           </Link>
           {menu === "kids" ? <hr /> : <></>}
         </li>
+        <li
+          onClick={() => {
+            setMenu("orders");
+          }}
+        >
+          <Link style={{ textDecoration: "none" }} to={"/orders"}>
+            Orders
+          </Link>
+          {menu === "orders" ? <hr /> : <></>}
+        </li>
       </ul>
 
       <div className="nav-login-cart">

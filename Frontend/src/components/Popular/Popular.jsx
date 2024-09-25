@@ -14,9 +14,7 @@ function Popular() {
       .then((resData) => {
         setProduct(resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     popularSection();

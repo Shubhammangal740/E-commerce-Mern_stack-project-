@@ -47,7 +47,6 @@ app.use("/admin", adminRoutes);
 app.use(userRoutes);
 
 app.use((error, req, res, next) => {
-  // console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
@@ -60,9 +59,8 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(MONGO_URL)
   .then((result) => {
-    console.log("Connected!");
     app.listen("5000");
   })
   .catch((err) => {
-    console.log(err);
+    res.json({ message: "error in database", error: err.message });
   });

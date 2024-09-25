@@ -13,6 +13,10 @@ import men_banner from "./components/Assets/banner_mens.png";
 import women_banner from "./components/Assets/banner_women.png";
 import kid_banner from "./components/Assets/banner_kids.png";
 import AllProducts from "./pages/AllProducts";
+import Checkout from "./components/Checkout/Checkout";
+import Order from "./components/Order/Order";
+import cartItems from "./components/Assets/data";
+import OrderSuccessfull from "./components/OrderSuccessfull/OrderSuccessfull";
 
 function App() {
   return (
@@ -53,6 +57,15 @@ function App() {
           <Route path="/cart" element={<Cart></Cart>}></Route>
           <Route path="/login" element={<LoginSignup></LoginSignup>}></Route>
           <Route path="/signup" element={<LoginSignup></LoginSignup>}></Route>
+          <Route path="/checkout" element={<Checkout></Checkout>}></Route>
+          <Route
+            path="/checkout/success"
+            element={<OrderSuccessfull></OrderSuccessfull>}
+          ></Route>
+          <Route
+            path="/orders"
+            element={<Order orderDetails={cartItems}></Order>}
+          ></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>

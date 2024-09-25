@@ -27,4 +27,12 @@ router.delete("/cart/clear", isAuth, userControllers.DeleteCartItems);
 
 router.post("/related-product", userControllers.getRelatedProduct);
 
+router.post("/checkout", userControllers.getCheckout);
+
+router.post("/order", userControllers.getCheckoutSuccess);
+
+router.get("/checkout/cancel", isAuth, userControllers.getCheckout);
+
+router.post("/orders", userControllers.getOrder);
+
 module.exports = router;

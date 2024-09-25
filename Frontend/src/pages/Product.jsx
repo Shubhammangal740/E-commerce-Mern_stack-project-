@@ -22,9 +22,7 @@ function Product() {
       .then((resData) => {
         setData(resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const FetchedSinleProduct = async (productId) => {
     await fetch("http://localhost:5000/product", {
@@ -39,9 +37,7 @@ function Product() {
       .then((resData) => {
         setProduct(resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     FetchedSinleProduct(productId);

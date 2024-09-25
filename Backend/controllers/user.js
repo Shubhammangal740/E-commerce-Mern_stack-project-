@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Order = require("../models/order");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Product = require("../models/product");
@@ -6,6 +7,20 @@ const { default: mongoose } = require("mongoose");
 const product = require("../models/product");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const order = require("../models/order");
+const user = require("../models/user");
+const stripe = require("stripe")(
+  "sk_test_51PkIKqRuSNCxq3yDM3TV87DzvXgPWrpjaaa23M4LgCm3efso323hR7EoqutUOHEIQZYNXOwaMAzB6eDyV9yaWIJo00m4QdBjAc"
+); // Make sure to replace with your actual Stripe secret key
+
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        "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",
+    },
+  })
+);
 
 exports.postSignUp = (req, res, next) => {
   const name = req.body.name;
@@ -319,5 +334,234 @@ exports.getRelatedProduct = (req, res, next) => {
       err.statusCode = 500;
     }
     next(err);
+  }
+};
+
+// exports.getCheckOut = (req, res, next) => {
+//   const userId = new mongoose.Types.ObjectId("66e6f8e07d2785835d6f23c8");
+//   let product;
+//   let totalPrice;
+//   User.findById(userId)
+//     .then((user) => {
+//       if (!user) {
+//         const error = new Error("user not found!");
+//         error.statusCode = 404;
+//         throw error;
+//       }
+//       product = user.cart.items;
+//       totalPrice = 0;
+//       product.forEach((p) => {
+//         Product.findById(p.productId).then((product) => {
+//           if (!product) {
+//             const error = new Error("does not have any product");
+//             error.statusCode = 404;
+//             throw error;
+//           }
+//           totalPrice += p.quantity * product.new_price;
+//           return totalPrice;
+//         });
+//       });
+//     })
+//     .then((price) => {
+//       console.log(price);
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: err.message });
+//     });
+// };
+
+exports.getCheckout = (req, res, next) => {
+  const protocol = req.body.protocol;
+  const host = req.body.host;
+  const userId = req.body.userId;
+  try {
+    User.findById(userId)
+      .populate("cart.items.productId") // Populate cart with product data
+      .then((user) => {
+        const cartItems = user.cart.items;
+
+        // Transform cart items into a format suitable for Stripe checkout
+        const lineItems = cartItems.map((item) => ({
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.productId.name,
+              description: item.productId.description,
+            },
+            unit_amount: Math.round(item.productId.new_price * 100), // Amount in cents
+          },
+          quantity: item.quantity,
+        }));
+
+        // Calculate the total price for the cart
+        let totalPrice = 0;
+        cartItems.forEach((item) => {
+          totalPrice += item.quantity * item.productId.new_price;
+        });
+
+        // Create a Stripe checkout session
+        return stripe.checkout.sessions
+          .create({
+            payment_method_types: ["card"],
+            mode: "payment",
+            line_items: lineItems,
+            success_url: `${protocol}//${host}/checkout/success`,
+            cancel_url: `${protocol}//${host}/checkout/cancel`,
+          })
+          .then((session) => {
+            // Send the response as JSON to the React frontend
+            res.status(200).json({
+              products: cartItems.map((item) => ({
+                product: {
+                  _id: item.productId._id,
+                  name: item.productId.title,
+                  image: item.productId.imageUrl,
+                  new_price: item.productId.new_price,
+                  date: item.productId.date,
+                },
+                quantity: item.quantity,
+                totalItemPrice: item.quantity * item.productId.new_price,
+              })),
+              totalPrice: totalPrice,
+              sessionId: session.id,
+            });
+          });
+      });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getCheckoutSuccess = (req, res, next) => {
+  const cartItems = req.body.cartItems;
+  const userId = req.body.userId;
+  try {
+    const productDetail = {
+      items: cartItems.map((item) => ({
+        productId: item.product._id, // Mapping _id to productId
+        quantity: item.quantity, // Quantity
+      })),
+    };
+
+    const totalPrice = cartItems.reduce(
+      (acc, item) => acc + item.totalItemPrice,
+      0
+    );
+
+    const newOrder = new Order({
+      Date: new Date(),
+      productDetail: productDetail,
+      userId: userId,
+      totalPrice: totalPrice,
+    });
+
+    newOrder.save().then((result) => {
+      res.json({ message: "Order Saved Succefully" });
+    });
+    User.findById(userId).then((user) => {
+      return transporter.sendMail({
+        to: user.email,
+        from: "shubhammangal740@gmail.com",
+        subject: "Order Confirmation", // Subject line
+        text: "Thank you for Ordering", // Plain text body
+        html: "<h1>We will try to send Your Order As Soon As Pssible</h1> </br> </hr> <P> keep Ordering 😊</p> ", // HTML body
+      });
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// exports.getCheckoutSuccess = (req, res, next) => {
+//   const userId = "66e6f8e07d2785835d6f23c8";
+
+//   User.findById(userId)
+//     .populate("cart.items.productId")
+//     .then((user) => {
+//       const products = user.cart.items;
+
+//       /// Map the products and quantities to store in the order
+//       const orderItems = products.map((p) => {
+//         return {
+//           productId: p.productId._id.toString(), // Store the product ID
+//           quantity: p.quantity, // Store the quantity
+//         };
+//       });
+
+//       // Calculate the total price for the cart
+//       let totalPrice = 0;
+//       products.forEach((item) => {
+//         totalPrice += item.quantity * item.productId.new_price;
+//       });
+//       // console.log(products);
+//       const order = new Order({
+//         Date: Date.now(),
+//         productDetail: {
+//           items: orderItems,
+//         },
+//         userId: "66e6f8e07d2785835d6f23c8",
+//         totalPrice: totalPrice,
+//       });
+//       return order.save();
+//     })
+//     .then((order) => {
+//       // res.redirect("http://localhost:5173/order");
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: err.message });
+//     });
+// };
+
+exports.getOrder = (req, res, next) => {
+  const userId = req.body.userId;
+  try {
+    // Fetch orders for a specific user
+    Order.find({ userId: new mongoose.Types.ObjectId(userId) }).then(
+      (orders) => {
+        if (!orders.length) {
+          return res.status(200).json([]); // No orders found for the user
+        }
+
+        // Extract unique product IDs from all orders
+        const productIds = new Set();
+        orders.forEach((order) => {
+          order.productDetail.items.forEach((item) => {
+            productIds.add(item.productId.toString()); // Store unique product IDs
+          });
+        });
+
+        // Fetch product details using Promise.all
+        return Promise.all(
+          Array.from(productIds).map((productId) => Product.findById(productId))
+        ).then((products) => {
+          // Create a map of product ID to product details
+          const productMap = {};
+          products.forEach((product) => {
+            if (product) {
+              productMap[product._id.toString()] = product;
+            }
+          });
+
+          // Attach product details to each order
+          const ordersWithProducts = orders.map((order) => {
+            const itemsWithDetails = order.productDetail.items.map((item) => ({
+              ...item.toObject(),
+              product: productMap[item.productId.toString()] || null, // Avoid duplication
+            }));
+            return {
+              ...order.toObject(),
+              productDetail: {
+                items: itemsWithDetails,
+              },
+            };
+          });
+
+          // Send the final response
+          res.status(200).json(ordersWithProducts);
+        });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

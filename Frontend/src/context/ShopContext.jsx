@@ -12,9 +12,7 @@ const ShopContextProvider = (props) => {
       .then((resData) => {
         setAll_products(resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     // Fetch cart items for the authenticated user
     if (localStorage.getItem("auth-token")) {
@@ -35,9 +33,7 @@ const ShopContextProvider = (props) => {
           });
           setCartItems(fetchedCart);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   }, []);
 
@@ -59,12 +55,8 @@ const ShopContextProvider = (props) => {
         }),
       })
         .then((res) => res.json())
-        .then((resData) => {
-          console.log(resData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((resData) => {})
+        .catch((err) => {});
     }
   };
 
@@ -92,12 +84,8 @@ const ShopContextProvider = (props) => {
         }),
       })
         .then((res) => res.json())
-        .then((resData) => {
-          console.log(resData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((resData) => {})
+        .catch((err) => {});
     }
   };
 
@@ -113,12 +101,8 @@ const ShopContextProvider = (props) => {
         },
       })
         .then((res) => res.json())
-        .then((resData) => {
-          console.log(resData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((resData) => {})
+        .catch((err) => {});
     }
   };
 
