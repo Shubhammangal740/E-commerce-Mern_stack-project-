@@ -16,8 +16,7 @@ const stripe = require("stripe")(
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key:
-        "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",
+      api_key: "",
     },
   })
 );
