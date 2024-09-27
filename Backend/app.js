@@ -5,6 +5,11 @@ const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const bodyParser = require("body-parser");
+require("dotenv").config();
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
+const fs = require("fs");
 
 const app = express();
 
@@ -33,8 +38,19 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  {
+    flags: "a",
+  }
+);
 
-const MONGO_URL = "";
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
+
+const PORT = process.env.PORT || 5000;
+const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;
 
 app.use(cors());
 
@@ -59,8 +75,8 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(MONGO_URL)
   .then((result) => {
-    app.listen("5000");
+    app.listen(PORT);
   })
   .catch((err) => {
-    res.json({ message: "error in database", error: err.message });
+    console.log(err);
   });

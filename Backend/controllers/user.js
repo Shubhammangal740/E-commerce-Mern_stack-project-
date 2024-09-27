@@ -9,12 +9,12 @@ const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const order = require("../models/order");
 const user = require("../models/user");
-const stripe = require("stripe")(""); // Make sure to replace with your actual Stripe secret key
+const stripe = require("stripe")(process.env.StripeKey); // Make sure to replace with your actual Stripe secret key
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: "",
+      api_key: process.env.SendGridApi,
     },
   })
 );
