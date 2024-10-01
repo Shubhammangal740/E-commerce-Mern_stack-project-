@@ -7,17 +7,16 @@ const { default: mongoose } = require("mongoose");
 const product = require("../models/product");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-const order = require("../models/order");
-const user = require("../models/user");
 const stripe = require("stripe")(process.env.StripeKey); // Make sure to replace with your actual Stripe secret key
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: process.env.SendGridApi,
-    },
-  })
-);
+// const transporter = nodemailer.createTransport(
+//   sendgridTransport({
+//     auth: {
+//       api_key:
+//         "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",
+//     },
+//   })
+// );
 
 exports.postSignUp = (req, res, next) => {
   const name = req.body.name;
@@ -26,9 +25,7 @@ exports.postSignUp = (req, res, next) => {
   try {
     User.findOne({ email: email }).then((user) => {
       if (user) {
-        const error = new Error("user already exist!");
-        error.statusCode = 401;
-        throw error;
+        return res.status(400).json({ error: "User already exists" });
       }
 
       bcrypt.hash(password, 12).then((hashedPassword) => {
@@ -46,19 +43,17 @@ exports.postSignUp = (req, res, next) => {
         });
       });
 
-      return transporter.sendMail({
-        to: email,
-        from: "shubhammangal740@gmail.com",
-        subject: "Welcome to our app!", // Subject line
-        text: "Thank you for registering!", // Plain text body
-        html: "<h1>Thank you for registering!</h1>", // HTML body
-      });
+      // return transporter.sendMail({
+      //   to: email,
+      //   from: "shubhammangal740@gmail.com",
+      //   subject: "Welcome to our app!", // Subject line
+      //   text: "Thank you for registering!", // Plain text body
+      //   html: "<h1>Thank you for registering!</h1>", // HTML body
+      // });
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    console.log(err);
+    res.status(400).json({ error: "Internal Server Error" });
   }
 };
 
@@ -68,16 +63,12 @@ exports.Postlogin = (req, res, next) => {
   try {
     User.findOne({ email: email }).then((user) => {
       if (!user) {
-        const error = new Error("User Does Not Exist!");
-        error.statusCode = 404;
-        throw error;
+        res.status(401).json({ error: "User Does Not Exist" });
       }
 
       bcrypt.compare(password, user.password).then((isEqual) => {
         if (!isEqual) {
-          const error = new Error("password is incorrect");
-          error.statusCode = 402;
-          throw error;
+          res.status(401).json({ error: "Password Is Incorrect " });
         }
         const token = jwt.sign(
           {
@@ -96,10 +87,7 @@ exports.Postlogin = (req, res, next) => {
       });
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    res.json({ error: "Login Failed " });
   }
 };
 
@@ -455,15 +443,15 @@ exports.getCheckoutSuccess = (req, res, next) => {
     newOrder.save().then((result) => {
       res.json({ message: "Order Saved Succefully" });
     });
-    User.findById(userId).then((user) => {
-      return transporter.sendMail({
-        to: user.email,
-        from: "shubhammangal740@gmail.com",
-        subject: "Order Confirmation", // Subject line
-        text: "Thank you for Ordering", // Plain text body
-        html: "<h1>We will try to send Your Order As Soon As Pssible</h1> </br> </hr> <P> keep Ordering 😊</p> ", // HTML body
-      });
-    });
+    // User.findById(userId).then((user) => {
+    //   return transporter.sendMail({
+    //     to: user.email,
+    //     from: "shubhammangal740@gmail.com",
+    //     subject: "Order Confirmation", // Subject line
+    //     text: "Thank you for Ordering", // Plain text body
+    //     html: "<h1>We will try to send Your Order As Soon As Pssible</h1> </br> </hr> <P> keep Ordering 😊</p> ", // HTML body
+    //   });
+    // });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

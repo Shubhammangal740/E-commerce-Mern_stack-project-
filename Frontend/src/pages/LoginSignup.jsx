@@ -8,58 +8,80 @@ function LoginSignup() {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const login = async () => {
-    let responseData;
-    const user = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((resData) => {
-        responseData = resData;
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
 
-    if (responseData) {
-      localStorage.setItem("auth-token", responseData.token);
-      localStorage.setItem("userId", responseData.userId);
-      window.location.replace("/");
-    } else {
-      throw new Error("please enter a valid credentials");
+      const responseData = await response.json();
+
+      if (response.ok) {
+        // Save token and user details
+        localStorage.setItem("auth-token", responseData.token);
+        localStorage.setItem("userId", responseData.userId);
+        setErrorMessage(""); // Clear any previous error messages
+        // Redirect after successful login
+        window.location.replace("/");
+      } else {
+        // Display error message from the response
+        setErrorMessage(
+          responseData.error || "Login failed. Please try again."
+        );
+      }
+    } catch (err) {
+      setErrorMessage(
+        err.message || "An unexpected error occurred during login."
+      );
     }
   };
+
   const signup = async () => {
-    console.log(formData);
-    const user = await fetch("http://localhost:5000/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((resData) => {
+    try {
+      const response = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        setErrorMessage(""); // Clear any previous error messages
+        // After successful signup, switch to login
         setState("Login");
-      })
-      .catch((err) => {});
+      } else {
+        // Display error message from the response
+        setErrorMessage(
+          responseData.error || "Signup failed. Please try again."
+        );
+      }
+    } catch (err) {
+      setErrorMessage(
+        err.message || "An unexpected error occurred during signup."
+      );
+    }
   };
 
   return (
     <div className="loginsignup">
       <div className="loginsignup-container">
+        {errorMessage && <p className="loginsignup-error">{errorMessage}</p>}
         <h1>{state}</h1>
         <div className="loginsignup-fields">
           {state === "Sign up" ? (
@@ -88,6 +110,7 @@ function LoginSignup() {
             placeholder="password"
           />
         </div>
+
         <button
           onClick={() => {
             state === "Sign up" ? signup() : login();
@@ -95,6 +118,7 @@ function LoginSignup() {
         >
           Continue
         </button>
+
         {state === "Sign up" ? (
           <p className="loginsignup-login">
             Already have an account?{" "}
@@ -121,7 +145,7 @@ function LoginSignup() {
 
         <div className="loginsignup-agree">
           <input type="checkbox" name="" id="" />
-          <p> By continuing i agree to the terms of use & privace policy.</p>
+          <p> By continuing I agree to the terms of use & privacy policy.</p>
         </div>
       </div>
     </div>
