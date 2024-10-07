@@ -3,9 +3,10 @@ import "./Popular.css";
 import Item from "../Items/Item";
 
 function Popular() {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const [product, setProduct] = useState([]);
   const popularSection = async () => {
-    await fetch("http://localhost:5000/popular", {
+    await fetch(`${apiUrl}/popular`, {
       headers: {
         "Content-Type": "application/json",
       },

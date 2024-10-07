@@ -4,6 +4,7 @@ import upload_area from "../../assets/upload_area.svg";
 import { useNavigate, useParams } from "react-router-dom";
 
 function AddProduct() {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const { productId } = useParams();
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
@@ -18,7 +19,7 @@ function AddProduct() {
 
   useEffect(() => {
     if (productId) {
-      fetch("http://localhost:5000/admin/product", {
+      fetch(`${apiUrl}/admin/product`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -60,7 +61,7 @@ function AddProduct() {
       let formData = new FormData();
       formData.append("image", image);
 
-      await fetch("http://localhost:5000/admin/image", {
+      await fetch(`${apiUrl}/admin/image`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -78,8 +79,8 @@ function AddProduct() {
     }
 
     const url = productId
-      ? `http://localhost:5000/admin/addproduct/${productId}`
-      : "http://localhost:5000/admin/addproduct";
+      ? `${apiUrl}/admin/addproduct/${productId}`
+      : `${apiUrl}/admin/addproduct`;
 
     await fetch(url, {
       method: "POST",

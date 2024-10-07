@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./NewCollection.css";
 import Item from "../Items/Item";
 function NewCollections() {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const [product, setProduct] = useState([]);
 
   const NewCollectionProduct = async () => {
-    await fetch("http://localhost:5000/newcollection")
+    await fetch(`${apiUrl}/newcollection`)
       .then((res) => res.json())
       .then((product) => {
         setProduct(product.data);

@@ -3,11 +3,12 @@ import React, { createContext, useState, useEffect } from "react";
 export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const [all_product, setAll_products] = useState([]);
   const [cartItems, setCartItems] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:5000/allproducts`)
+    fetch(`${apiUrl}/allproducts`)
       .then((res) => res.json())
       .then((resData) => {
         setAll_products(resData.data);
@@ -17,7 +18,7 @@ const ShopContextProvider = (props) => {
     // Fetch cart items for the authenticated user
     if (localStorage.getItem("auth-token")) {
       const token = localStorage.getItem("auth-token");
-      fetch("http://localhost:5000/cart", {
+      fetch(`${apiUrl}/cart`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +44,7 @@ const ShopContextProvider = (props) => {
 
     if (localStorage.getItem("auth-token")) {
       const token = localStorage.getItem("auth-token");
-      await fetch("http://localhost:5000/cart", {
+      await fetch(`${apiUrl}/cart`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -72,7 +73,7 @@ const ShopContextProvider = (props) => {
 
     if (localStorage.getItem("auth-token")) {
       const token = localStorage.getItem("auth-token");
-      await fetch("http://localhost:5000/cart", {
+      await fetch(`${apiUrl}/cart`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -94,7 +95,7 @@ const ShopContextProvider = (props) => {
 
     if (localStorage.getItem("auth-token")) {
       const token = localStorage.getItem("auth-token");
-      await fetch("http://localhost:5000/cart/clear", {
+      await fetch(`${apiUrl}/cart/clear`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -17,7 +17,6 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
 app.use(cors());
 
 const storage = multer.diskStorage({

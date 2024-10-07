@@ -9,14 +9,13 @@ const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const stripe = require("stripe")(process.env.StripeKey); // Make sure to replace with your actual Stripe secret key
 
-// const transporter = nodemailer.createTransport(
-//   sendgridTransport({
-//     auth: {
-//       api_key:
-//         "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",
-//     },
-//   })
-// );
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: process.env.SENDGRID_API_KEY,
+    },
+  })
+);
 
 exports.postSignUp = (req, res, next) => {
   const name = req.body.name;
@@ -43,13 +42,13 @@ exports.postSignUp = (req, res, next) => {
         });
       });
 
-      // return transporter.sendMail({
-      //   to: email,
-      //   from: "shubhammangal740@gmail.com",
-      //   subject: "Welcome to our app!", // Subject line
-      //   text: "Thank you for registering!", // Plain text body
-      //   html: "<h1>Thank you for registering!</h1>", // HTML body
-      // });
+      return transporter.sendMail({
+        to: email,
+        from: "shubhammangal740@gmail.com",
+        subject: "Welcome to our app!", // Subject line
+        text: "Thank you for registering!", // Plain text body
+        html: "<h1>Thank you for registering!</h1>", // HTML body
+      });
     });
   } catch (err) {
     console.log(err);

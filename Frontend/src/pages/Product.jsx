@@ -7,11 +7,12 @@ import DescriptionBox from "../components/DescriptionBox/DescriptionBox";
 import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
 
 function Product() {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [data, setData] = useState([]);
   const fetchRelatedProduct = async () => {
-    await fetch("http://localhost:5000/related-product", {
+    await fetch(`${apiUrl}/related-product`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +26,7 @@ function Product() {
       .catch((err) => {});
   };
   const FetchedSinleProduct = async (productId) => {
-    await fetch("http://localhost:5000/product", {
+    await fetch(`${apiUrl}/product`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

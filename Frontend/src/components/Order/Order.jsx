@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./Order.css"; // Import your CSS file for styling
 
 const Order = () => {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const [order, setOrder] = useState([]);
 
   const userId = localStorage.getItem("userId");
 
   const fetchOrder = () => {
-    fetch("http://localhost:5000/orders", {
+    fetch(`${apiUrl}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

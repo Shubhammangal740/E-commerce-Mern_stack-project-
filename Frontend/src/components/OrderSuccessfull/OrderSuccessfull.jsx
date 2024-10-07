@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../context/ShopContext";
 
 function OrderSuccessfull() {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const { clearCart, cartItems, all_product } = useContext(ShopContext);
   const navigate = useNavigate();
   const storedCartItems = localStorage.getItem("orderData");
@@ -10,7 +11,7 @@ function OrderSuccessfull() {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    fetch("http://localhost:5000/order", {
+    fetch(`${apiUrl}/order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

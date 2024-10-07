@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./css/LoginSignup.css";
 
 function LoginSignup() {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +17,7 @@ function LoginSignup() {
 
   const login = async () => {
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +52,7 @@ function LoginSignup() {
 
   const signup = async () => {
     try {
-      const response = await fetch("http://localhost:5000/signup", {
+      const response = await fetch(`${apiUrl}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

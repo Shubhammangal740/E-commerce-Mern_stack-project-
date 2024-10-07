@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
+  const apiUrl = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -17,7 +18,7 @@ const Checkout = () => {
     const protocol = window.location.protocol;
     const host = window.location.host;
     const userId = localStorage.getItem("userId");
-    fetch("http://localhost:5000/checkout", {
+    fetch(`${apiUrl}/checkout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
