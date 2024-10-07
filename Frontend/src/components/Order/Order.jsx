@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Order.css"; // Import your CSS file for styling
 
 const Order = () => {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const [order, setOrder] = useState([]);
 
   const userId = localStorage.getItem("userId");

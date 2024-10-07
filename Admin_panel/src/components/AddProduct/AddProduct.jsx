@@ -4,7 +4,7 @@ import upload_area from "../../assets/upload_area.svg";
 import { useNavigate, useParams } from "react-router-dom";
 
 function AddProduct() {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const { productId } = useParams();
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
