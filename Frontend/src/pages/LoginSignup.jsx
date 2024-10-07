@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./css/LoginSignup.css";
 
 function LoginSignup() {
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = "http://localhost:5000";
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     name: "",

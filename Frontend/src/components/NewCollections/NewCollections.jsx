@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./NewCollection.css";
 import Item from "../Items/Item";
 function NewCollections() {
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = "http://localhost:5000";
   const [product, setProduct] = useState([]);
 
   const NewCollectionProduct = async () => {

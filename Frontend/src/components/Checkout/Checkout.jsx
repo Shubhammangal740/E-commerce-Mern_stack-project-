@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = "http://localhost:5000";
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -35,10 +35,10 @@ const Checkout = () => {
         setTotalPrice(resData.totalPrice);
         setSessionId(resData.sessionId);
         // Only store in localStorage if it's not already there
-        if (localStorage.getItem("cartItems")) {
+        if (!localStorage.getItem("cartItems")) {
           localStorage.setItem("orderData", JSON.stringify(resData.products));
         }
-        if (localStorage.getItem("totalPrice")) {
+        if (!localStorage.getItem("totalPrice")) {
           localStorage.setItem("Price", resData.totalPrice);
         }
       })

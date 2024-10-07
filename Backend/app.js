@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const helmet = require("helmet");
 const compression = require("compression");
-const morgan = require("morgan");
 const fs = require("fs");
 
 const app = express();
@@ -46,9 +45,7 @@ const accessLogStream = fs.createWriteStream(
   }
 );
 
-// app.use(helmet());
 app.use(compression());
-// app.use(morgan("combined", { stream: accessLogStream }));
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;

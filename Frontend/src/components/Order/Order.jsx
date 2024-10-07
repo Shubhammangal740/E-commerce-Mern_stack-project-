@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Order.css"; // Import your CSS file for styling
 
 const Order = () => {
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = "http://localhost:5000";
   const [order, setOrder] = useState([]);
 
   const userId = localStorage.getItem("userId");

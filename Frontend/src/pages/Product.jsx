@@ -7,7 +7,7 @@ import DescriptionBox from "../components/DescriptionBox/DescriptionBox";
 import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
 
 function Product() {
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = "http://localhost:5000";
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [data, setData] = useState([]);

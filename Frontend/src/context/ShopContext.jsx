@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = "http://localhost:5000";
   const [all_product, setAll_products] = useState([]);
   const [cartItems, setCartItems] = useState({});
 
