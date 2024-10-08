@@ -33,7 +33,7 @@ exports.PostUploadImage = (req, res, next) => {
   try {
     res.json({
       message: "File Uploaded",
-      imageUrl: `http://localhost:5000/images/${req.file.filename}`,
+      imageUrl: `https://cloth-store-knu7.onrender.com/images/${req.file.filename}`,
     });
   } catch (err) {
     if (!err.statusCode) {
