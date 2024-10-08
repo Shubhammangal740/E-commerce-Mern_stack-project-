@@ -16,13 +16,12 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
-app.use(
-  cors({
-    origin: "*",
-    credentials: true, // Allow credentials (cookies, auth)
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-  })
-);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
