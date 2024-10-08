@@ -16,7 +16,13 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true, // Allow credentials (cookies, auth)
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+  })
+);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
