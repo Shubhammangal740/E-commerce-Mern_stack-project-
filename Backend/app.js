@@ -18,6 +18,11 @@ const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
 app.use(cors());
 
+app.use("/images", (req, res, next) => {
+  console.log(`Request for: ${req.url}`);
+  next();
+});
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "images");
