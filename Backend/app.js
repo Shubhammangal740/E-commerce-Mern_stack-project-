@@ -16,15 +16,7 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
-app.use(
-  cors({
-    origin: [
-      "https://cloth-store-knu7.onrender.com",
-      "https://admin-pannel-ba7j.onrender.com",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -46,12 +38,12 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "access.log"),
-  {
-    flags: "a",
-  }
-);
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, "access.log"),
+//   {
+//     flags: "a",
+//   }
+// );
 
 // app.use(compression());
 
