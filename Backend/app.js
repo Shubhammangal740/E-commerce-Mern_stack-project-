@@ -16,27 +16,16 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
-// Define the list of allowed origins
-const allowedOrigins = [
-  "https://cloth-store-knu7.onrender.com",
-  "https://admin-pannel-ba7j.onrender.com",
-]; // Your two frontends
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin) return callback(null, true);
-
-    // Check if the origin is in the allowed list
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: [
+    "https://cloth-store-knu7.onrender.com",
+    "https://admin-pannel-ba7j.onrender.com",
+  ], // Your frontend URLs
   credentials: true, // Allow credentials (cookies, authorization headers)
 };
 
+// Use the CORS middleware with options
 app.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
