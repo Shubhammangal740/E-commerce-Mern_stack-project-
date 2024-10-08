@@ -16,7 +16,15 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://cloth-store-knu7.onrender.com",
+      "https://admin-pannel-ba7j.onrender.com",
+    ],
+    credentials: true,
+  })
+);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -45,7 +53,7 @@ const accessLogStream = fs.createWriteStream(
   }
 );
 
-app.use(compression());
+// app.use(compression());
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;
