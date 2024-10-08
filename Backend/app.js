@@ -17,16 +17,15 @@ const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
 
-const corsOptions = {
-  origin: [
-    "https://cloth-store-knu7.onrender.com",
-    "https://admin-pannel-ba7j.onrender.com",
-  ], // Your frontend URLs
-  credentials: true, // Allow credentials (cookies, authorization headers)
-};
-
-// Use the CORS middleware with options
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
