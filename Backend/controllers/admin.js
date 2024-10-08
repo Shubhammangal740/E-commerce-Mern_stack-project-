@@ -2,7 +2,6 @@ const Product = require("../models/product");
 const mongoose = require("mongoose");
 
 exports.PostAddProduct = (req, res, next) => {
-  console.log(req.body.image);
   const name = req.body.name;
   const image = req.body.image;
   const category = req.body.category;
@@ -31,6 +30,7 @@ exports.PostAddProduct = (req, res, next) => {
 };
 
 exports.PostUploadImage = (req, res, next) => {
+  console.log(req.file.filter);
   try {
     res.json({
       message: "File Uploaded",
