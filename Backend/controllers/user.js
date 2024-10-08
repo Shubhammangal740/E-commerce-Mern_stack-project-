@@ -442,15 +442,15 @@ exports.getCheckoutSuccess = (req, res, next) => {
     newOrder.save().then((result) => {
       res.json({ message: "Order Saved Succefully" });
     });
-    // User.findById(userId).then((user) => {
-    //   return transporter.sendMail({
-    //     to: user.email,
-    //     from: "shubhammangal740@gmail.com",
-    //     subject: "Order Confirmation", // Subject line
-    //     text: "Thank you for Ordering", // Plain text body
-    //     html: "<h1>We will try to send Your Order As Soon As Pssible</h1> </br> </hr> <P> keep Ordering 😊</p> ", // HTML body
-    //   });
-    // });
+    User.findById(userId).then((user) => {
+      return transporter.sendMail({
+        to: user.email,
+        from: "shubhammangal740@gmail.com",
+        subject: "Order Confirmation", // Subject line
+        text: "Thank you for Ordering", // Plain text body
+        html: "<h1>We will try to send Your Order As Soon As Pssible</h1> </br> </hr> <P> keep Ordering 😊</p> ", // HTML body
+      });
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
