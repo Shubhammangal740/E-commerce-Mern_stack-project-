@@ -30,7 +30,6 @@ exports.PostAddProduct = (req, res, next) => {
 };
 
 exports.PostUploadImage = (req, res, next) => {
-  console.log(req.file.filter);
   try {
     res.json({
       message: "File Uploaded",
