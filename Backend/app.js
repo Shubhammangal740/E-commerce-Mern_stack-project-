@@ -21,7 +21,7 @@ app.use(cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "images");
+    cb(null, "/images");
   },
   filename: function (res, file, cb) {
     cb(null, uuidv4() + "-" + file.originalname);
@@ -46,7 +46,7 @@ const fileFilter = (req, file, cb) => {
 //   }
 // );
 
-app.use(compression());
+// app.use(compression());
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;
