@@ -21,7 +21,7 @@ app.use(cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "/images");
+    cb(null, "images");
   },
   filename: function (res, file, cb) {
     cb(null, uuidv4() + "-" + file.originalname);
