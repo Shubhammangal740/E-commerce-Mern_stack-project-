@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const mongoose = require("mongoose");
 
 exports.PostAddProduct = (req, res, next) => {
-  console.log(req.body.image);
+  // console.log(req.body.image);
   // console.log(req.file);
   const name = req.body.name;
   const image = req.body.image;
