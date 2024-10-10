@@ -35,12 +35,14 @@ const Checkout = () => {
         setTotalPrice(resData.totalPrice);
         setSessionId(resData.sessionId);
         // Only store in localStorage if it's not already there
-        if (!localStorage.getItem("cartItems")) {
-          localStorage.setItem("orderData", JSON.stringify(resData.products));
-        }
-        if (!localStorage.getItem("totalPrice")) {
-          localStorage.setItem("Price", resData.totalPrice);
-        }
+        localStorage.setItem("orderData", JSON.stringify(resData.products));
+        localStorage.setItem("Price", resData.totalPrice);
+        // if (!localStorage.getItem("cartItems")) {
+        //   localStorage.setItem("orderData", JSON.stringify(resData.products));
+        // }
+        // if (!localStorage.getItem("totalPrice")) {
+        //   localStorage.setItem("Price", resData.totalPrice);
+        // }
       })
       .catch((err) => {
         console.log(err);
