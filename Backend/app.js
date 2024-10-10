@@ -49,7 +49,7 @@ app.use(cors());
 //   }
 // );
 
-app.use(compression());
+// app.use(compression());
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;
