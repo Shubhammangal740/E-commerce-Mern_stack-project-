@@ -7,7 +7,7 @@ import DescriptionBox from "../components/DescriptionBox/DescriptionBox";
 import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
 
 function Product() {
-  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+  const apiUrl = "http://localhost:5000";
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [data, setData] = useState([]);

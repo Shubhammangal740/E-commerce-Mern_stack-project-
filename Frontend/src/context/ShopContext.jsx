@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
-  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+  const apiUrl = "http://localhost:5000";
   const [all_product, setAll_products] = useState([]);
   const [cartItems, setCartItems] = useState({});
 

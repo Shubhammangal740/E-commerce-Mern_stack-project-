@@ -498,6 +498,7 @@ exports.getCheckoutSuccess = (req, res, next) => {
 
 exports.getOrder = (req, res, next) => {
   const userId = req.body.userId;
+
   try {
     // Fetch orders for a specific user
     Order.find({ userId: new mongoose.Types.ObjectId(userId) }).then(
@@ -514,9 +515,12 @@ exports.getOrder = (req, res, next) => {
           });
         });
 
-        // Fetch product details using Promise.all
+        // Fetch product details using Promise.all, ensure ObjectId for productId
         return Promise.all(
-          Array.from(productIds).map((productId) => Product.findById(productId))
+          Array.from(productIds).map((productId) => {
+            // Convert to ObjectId before querying
+            return Product.findById(new mongoose.Types.ObjectId(productId));
+          })
         ).then((products) => {
           // Create a map of product ID to product details
           const productMap = {};

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
-  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+  const apiUrl = "http://localhost:5000";
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);

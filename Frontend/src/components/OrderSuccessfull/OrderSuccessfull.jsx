@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../context/ShopContext";
 
 function OrderSuccessfull() {
-  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+  const apiUrl = "http://localhost:5000";
   const { clearCart, cartItems, all_product } = useContext(ShopContext);
   const navigate = useNavigate();
   const storedCartItems = localStorage.getItem("orderData");
   const storedTotalPrice = localStorage.getItem("Price");
   const userId = localStorage.getItem("userId");
 
-  useEffect(() => {
+  const saveOrder = () => {
     fetch(`${apiUrl}/order`, {
       method: "POST",
       headers: {
@@ -26,14 +26,13 @@ function OrderSuccessfull() {
       .then((res) => res.json())
       .then((data) => {
         // Optionally, clear cart from local storage or app state here
-        localStorage.removeItem("orderData");
-        localStorage.removeItem("Price");
-        // Redirect after 2 seconds
-        setTimeout(() => {
-          navigate("/orders"); // Redirect to the "All Orders" page
-        }, 2000);
+        localStorage.removeItem("cartItems");
+        localStorage.removeItem("totalPrice");
       })
       .catch((err) => {});
+  };
+  useEffect(() => {
+    saveOrder();
   }, [navigate]);
 
   return (

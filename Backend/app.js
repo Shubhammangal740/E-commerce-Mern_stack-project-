@@ -9,6 +9,7 @@ require("dotenv").config();
 const helmet = require("helmet");
 const compression = require("compression");
 const fs = require("fs");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const app = express();
 
@@ -16,9 +17,14 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
+const cloudinary = require("./utils/cloudinaryConfig");
 
 app.use(cors());
 
+<<<<<<< HEAD
+=======
+// for local machine configuration...
+>>>>>>> 96181cd7921f0145855c78658d6da8ab10826d9f
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, "images");
