@@ -21,10 +21,7 @@ const cloudinary = require("./utils/cloudinaryConfig");
 
 app.use(cors());
 
-<<<<<<< HEAD
-=======
 // for local machine configuration...
->>>>>>> 96181cd7921f0145855c78658d6da8ab10826d9f
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, "images");

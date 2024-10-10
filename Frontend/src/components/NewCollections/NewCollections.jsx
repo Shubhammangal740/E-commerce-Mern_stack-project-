@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./NewCollection.css";
 import Item from "../Items/Item";
 function NewCollections() {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const [product, setProduct] = useState([]);
 
   const NewCollectionProduct = async () => {

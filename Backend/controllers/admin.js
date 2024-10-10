@@ -32,10 +32,6 @@ exports.PostAddProduct = (req, res, next) => {
 };
 
 exports.PostUploadImage = (req, res, next) => {
-<<<<<<< HEAD
-=======
-
->>>>>>> 96181cd7921f0145855c78658d6da8ab10826d9f
   try {
     res.json({
       message: "File Uploaded",
