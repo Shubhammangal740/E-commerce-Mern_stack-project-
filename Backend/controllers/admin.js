@@ -30,11 +30,10 @@ exports.PostAddProduct = (req, res, next) => {
 };
 
 exports.PostUploadImage = (req, res, next) => {
-  console.log(req.file.filename);
   try {
     res.json({
       message: "File Uploaded",
-      imageUrl: `https://cloth-store-backend-kruy.onrender.com/images/${req.file.filename}`,
+      imageUrl: req.file.path,
     });
   } catch (err) {
     if (!err.statusCode) {
