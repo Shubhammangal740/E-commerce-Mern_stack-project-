@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Order.css"; // Import your CSS file for styling
 
 const Order = () => {
-  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+  const apiUrl = "http://localhost:5000";
   const [order, setOrder] = useState([]);
 
   const userId = localStorage.getItem("userId");
@@ -21,6 +21,7 @@ const Order = () => {
       .then((res) => res.json())
       .then((redData) => {
         setOrder(redData);
+        console.log(order);
       })
       .catch((err) => {});
   };
@@ -37,6 +38,7 @@ const Order = () => {
     <>
       {order.map((orderDetails) => (
         <div key={orderDetails._id} className="order-container">
+          {console.log(orderDetails)}
           <h1>Order Confirmation</h1>
           <div className="order-summary">
             <h2>Order ID: {orderDetails._id}</h2>

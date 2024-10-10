@@ -9,6 +9,7 @@ require("dotenv").config();
 const helmet = require("helmet");
 const compression = require("compression");
 const fs = require("fs");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const app = express();
 
@@ -16,37 +17,31 @@ const Product = require("./models/product");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
+const cloudinary = require("./utils/cloudinaryConfig");
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+app.use(cors());
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "images");
-  },
-  filename: function (res, file, cb) {
-    cb(null, uuidv4() + "-" + file.originalname);
-  },
-});
+// for local machine configuration...
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "images");
+//   },
+//   filename: function (res, file, cb) {
+//     cb(null, uuidv4() + "-" + file.originalname);
+//   },
+// });
 
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+// const fileFilter = (req, file, cb) => {
+//   if (
+//     file.mimetype === "image/png" ||
+//     file.mimetype === "image/jpg" ||
+//     file.mimetype === "image/jpeg"
+//   ) {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
 // const accessLogStream = fs.createWriteStream(
 //   path.join(__dirname, "access.log"),
 //   {
@@ -59,7 +54,7 @@ app.use(compression());
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;
 
-app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"));
+// app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());

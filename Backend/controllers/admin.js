@@ -2,6 +2,8 @@ const Product = require("../models/product");
 const mongoose = require("mongoose");
 
 exports.PostAddProduct = (req, res, next) => {
+  console.log(req.body.image);
+  // console.log(req.file);
   const name = req.body.name;
   const image = req.body.image;
   const category = req.body.category;
@@ -30,11 +32,11 @@ exports.PostAddProduct = (req, res, next) => {
 };
 
 exports.PostUploadImage = (req, res, next) => {
-  console.log(req.file.filter);
+  // console.log(req.file);
   try {
     res.json({
       message: "File Uploaded",
-      imageUrl: `https://cloth-store-backend-kruy.onrender.com/images/${req.file.filename}`,
+      imageUrl: req.file.path,
     });
   } catch (err) {
     if (!err.statusCode) {
