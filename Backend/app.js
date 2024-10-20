@@ -18,6 +18,7 @@ const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
 const cloudinary = require("./utils/cloudinaryConfig");
+const authRoutes = require("./routes/auth");
 
 app.use(cors());
 
@@ -61,6 +62,7 @@ app.use(express.json());
 
 app.use("/admin", adminRoutes);
 app.use(userRoutes);
+app.use(authRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

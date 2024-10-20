@@ -66,6 +66,20 @@ function App() {
             path="/orders"
             element={<Order orderDetails={cartItems}></Order>}
           ></Route>
+          <Route
+            path="/reset"
+            element={<ResetPassword></ResetPassword>}
+          ></Route>
+          <Route path="/reset" element={<NewPassword></NewPassword>}>
+            <Route
+              path=":resetToken"
+              element={<NewPassword></NewPassword>}
+            ></Route>
+          </Route>
+          <Route
+            path="/reset/email-sent"
+            element={<EmailSent></EmailSent>}
+          ></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>
