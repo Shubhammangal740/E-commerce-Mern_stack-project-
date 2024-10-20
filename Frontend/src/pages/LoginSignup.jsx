@@ -3,7 +3,7 @@ import "./css/LoginSignup.css";
 import { Link } from "react-router-dom";
 
 function LoginSignup() {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     name: "",

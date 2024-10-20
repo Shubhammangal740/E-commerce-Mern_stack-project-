@@ -15,7 +15,7 @@ function ResetPassword() {
   };
 
   const handleReset = async () => {
-    fetch("http://localhost:5000/reset", {
+    fetch("https://cloth-store-backend-kruy.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

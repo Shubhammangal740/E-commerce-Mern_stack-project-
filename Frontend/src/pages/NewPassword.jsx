@@ -14,7 +14,7 @@ function NewPassword() {
   };
 
   const handleNewPassword = () => {
-    fetch("http://localhost:5000/newpassword", {
+    fetch("https://cloth-store-backend-kruy.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
