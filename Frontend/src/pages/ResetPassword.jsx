@@ -30,7 +30,6 @@ function ResetPassword() {
         console.log(response);
       })
       .catch((err) => {
-        console.error("Fetch error:", error);
         alert("An error occurred. Please try again later.");
       });
     navigate("/reset/email-sent");

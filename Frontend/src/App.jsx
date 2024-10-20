@@ -17,6 +17,9 @@ import Checkout from "./components/Checkout/Checkout";
 import Order from "./components/Order/Order";
 import cartItems from "./components/Assets/data";
 import OrderSuccessfull from "./components/OrderSuccessfull/OrderSuccessfull";
+import ResetPassword from "./pages/ResetPassword";
+import NewPassword from "./pages/NewPassword";
+import EmailSent from "./components/EmailSent/EmailSent";
 
 function App() {
   return (
