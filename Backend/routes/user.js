@@ -27,9 +27,9 @@ router.delete("/cart/clear", isAuth, userControllers.DeleteCartItems);
 
 router.post("/related-product", userControllers.getRelatedProduct);
 
-router.post("/checkout", userControllers.getCheckout);
+router.post("/checkout", isAuth, userControllers.getCheckout);
 
-router.post("/order", userControllers.getCheckoutSuccess);
+router.post("/order", isAuth, userControllers.getCheckoutSuccess);
 
 router.get("/checkout/cancel", isAuth, userControllers.getCheckout);
 

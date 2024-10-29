@@ -17,6 +17,9 @@ import Checkout from "./components/Checkout/Checkout";
 import Order from "./components/Order/Order";
 import cartItems from "./components/Assets/data";
 import OrderSuccessfull from "./components/OrderSuccessfull/OrderSuccessfull";
+import ResetPassword from "./pages/ResetPassword";
+import NewPassword from "./pages/NewPassword";
+import EmailSent from "./components/EmailSent/EmailSent";
 
 function App() {
   return (
@@ -65,6 +68,20 @@ function App() {
           <Route
             path="/orders"
             element={<Order orderDetails={cartItems}></Order>}
+          ></Route>
+          <Route
+            path="/reset"
+            element={<ResetPassword></ResetPassword>}
+          ></Route>
+          <Route path="/reset" element={<NewPassword></NewPassword>}>
+            <Route
+              path=":resetToken"
+              element={<NewPassword></NewPassword>}
+            ></Route>
+          </Route>
+          <Route
+            path="/reset/email-sent"
+            element={<EmailSent></EmailSent>}
           ></Route>
         </Routes>
         <Footer></Footer>

@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
-  const apiUrl = "http://localhost:5000";
-  const navigate = useNavigate();
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+  const navigate = useNavigate(); // To navigate programmatically
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [sessionId, setSessionId] = useState(null);
@@ -14,37 +14,44 @@ const Checkout = () => {
     "pk_test_51PkIKqRuSNCxq3yDTKhS1IvpiCSvkAzIOVnGS265whUuVQj7dVBqayqunMudL6mCvEdLXJDnFRkXeT5b7qKOQqPh00CbKehEK6"
   );
 
-  const fetchedCartItems = () => {
-    const protocol = window.location.protocol;
-    const host = window.location.host;
-    const userId = localStorage.getItem("userId");
-    fetch(`${apiUrl}/checkout`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        protocol,
-        host,
-        userId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((resData) => {
-        setCartItems(resData.products); // Update to set the correct products array
-        setTotalPrice(resData.totalPrice);
-        setSessionId(resData.sessionId);
-        // Only store in localStorage if it's not already there
-        if (!localStorage.getItem("cartItems")) {
-          localStorage.setItem("orderData", JSON.stringify(resData.products));
-        }
-        if (!localStorage.getItem("totalPrice")) {
-          localStorage.setItem("Price", resData.totalPrice);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+  const fetchedCartItems = async () => {
+    try {
+      const protocol = window.location.protocol;
+      const host = window.location.host;
+      const userId = localStorage.getItem("userId");
+
+      const response = await fetch(`${apiUrl}/checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
+        },
+        body: JSON.stringify({ protocol, host, userId }),
       });
+
+      if (response.status === 401) {
+        // If unauthorized, navigate to login
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+        return;
+      }
+
+      const resData = await response.json();
+      setCartItems(resData.products);
+      setTotalPrice(resData.totalPrice);
+      setSessionId(resData.sessionId);
+
+      // Store data in localStorage only if not already present
+      if (!localStorage.getItem("cartItems")) {
+        localStorage.setItem("orderData", JSON.stringify(resData.products));
+      }
+      if (!localStorage.getItem("totalPrice")) {
+        localStorage.setItem("Price", resData.totalPrice);
+      }
+    } catch (err) {
+      console.error("Error fetching cart items:", err);
+    }
   };
 
   useEffect(() => {

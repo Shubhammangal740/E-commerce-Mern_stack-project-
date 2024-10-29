@@ -3,7 +3,7 @@ import "./Popular.css";
 import Item from "../Items/Item";
 
 function Popular() {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const [product, setProduct] = useState([]);
   const popularSection = async () => {
     await fetch(`${apiUrl}/popular`, {

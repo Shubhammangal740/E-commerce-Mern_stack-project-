@@ -18,6 +18,7 @@ const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const isAuth = require("./middelware/is-Auth");
 const cloudinary = require("./utils/cloudinaryConfig");
+const authRoutes = require("./routes/auth");
 
 app.use(cors());
 
@@ -49,7 +50,7 @@ app.use(cors());
 //   }
 // );
 
-// app.use(compression());
+app.use(compression());
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@e-commerce.d3cd9.mongodb.net/shop?retryWrites=true&w=majority&appName=E-commerce`;
@@ -61,6 +62,7 @@ app.use(express.json());
 
 app.use("/admin", adminRoutes);
 app.use(userRoutes);
+app.use(authRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

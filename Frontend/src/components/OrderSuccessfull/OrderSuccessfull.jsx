@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../context/ShopContext";
 
 function OrderSuccessfull() {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const { clearCart, cartItems, all_product } = useContext(ShopContext);
   const navigate = useNavigate();
   const storedCartItems = localStorage.getItem("orderData");
@@ -15,7 +15,7 @@ function OrderSuccessfull() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Use the correct token management here
+        Authorization: `Bearer ${localStorage.getItem("auth-token")}`, // Use the correct token management here
       },
       body: JSON.stringify({
         cartItems: JSON.parse(storedCartItems),
@@ -23,7 +23,15 @@ function OrderSuccessfull() {
         userId,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+          return;
+        }
+        res.json();
+      })
       .then((data) => {
         // Optionally, clear cart from local storage or app state here
         localStorage.removeItem("cartItems");

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./css/LoginSignup.css";
+import { Link } from "react-router-dom";
 
 function LoginSignup() {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     name: "",
@@ -143,11 +144,24 @@ function LoginSignup() {
             </span>
           </p>
         )}
-
-        <div className="loginsignup-agree">
-          <input type="checkbox" name="" id="" />
-          <p> By continuing I agree to the terms of use & privacy policy.</p>
-        </div>
+        {state == "Login" ? (
+          <p className="loginsignup-login">
+            Forgot your Password ?{" "}
+            <Link
+              to={"/reset"}
+              style={{
+                textDecoration: "none",
+                color: "#ff4141",
+                fontWeight: "600",
+              }}
+            >
+              {" "}
+              Reset password
+            </Link>
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
