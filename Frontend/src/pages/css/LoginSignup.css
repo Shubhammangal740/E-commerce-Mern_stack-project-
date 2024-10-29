@@ -48,7 +48,11 @@
 }
 
 .loginsignup-login {
+<<<<<<< HEAD
     margin-top: 10px;
+=======
+    margin-top: 40px;
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
     color: #5c5c5c;
     font-size: 18px;
     font-weight: 500;

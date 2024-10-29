@@ -5,7 +5,11 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
   const apiUrl = "https://cloth-store-backend-kruy.onrender.com";
+<<<<<<< HEAD
   const navigate = useNavigate(); // To navigate programmatically
+=======
+  const navigate = useNavigate();
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [sessionId, setSessionId] = useState(null);
@@ -14,6 +18,7 @@ const Checkout = () => {
     "pk_test_51PkIKqRuSNCxq3yDTKhS1IvpiCSvkAzIOVnGS265whUuVQj7dVBqayqunMudL6mCvEdLXJDnFRkXeT5b7qKOQqPh00CbKehEK6"
   );
 
+<<<<<<< HEAD
   const fetchedCartItems = async () => {
     try {
       const protocol = window.location.protocol;
@@ -27,6 +32,40 @@ const Checkout = () => {
           Authorization: `Bearer ${localStorage.getItem("auth-token")}`,
         },
         body: JSON.stringify({ protocol, host, userId }),
+=======
+  const fetchedCartItems = () => {
+    const protocol = window.location.protocol;
+    const host = window.location.host;
+    const userId = localStorage.getItem("userId");
+    fetch(`${apiUrl}/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        protocol,
+        host,
+        userId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((resData) => {
+        setCartItems(resData.products); // Update to set the correct products array
+        setTotalPrice(resData.totalPrice);
+        setSessionId(resData.sessionId);
+        // Only store in localStorage if it's not already there
+        localStorage.setItem("orderData", JSON.stringify(resData.products));
+        localStorage.setItem("Price", resData.totalPrice);
+        // if (!localStorage.getItem("cartItems")) {
+        //   localStorage.setItem("orderData", JSON.stringify(resData.products));
+        // }
+        // if (!localStorage.getItem("totalPrice")) {
+        //   localStorage.setItem("Price", resData.totalPrice);
+        // }
+      })
+      .catch((err) => {
+        console.log(err);
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
       });
 
       if (response.status === 401) {

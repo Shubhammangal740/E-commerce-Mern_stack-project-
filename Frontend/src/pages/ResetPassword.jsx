@@ -13,10 +13,16 @@ function ResetPassword() {
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+<<<<<<< HEAD
   console.log("entering the fetch method");
 
   const handleReset = () => {
     fetch("https://cloth-store-backend-kruy.onrender.com/reset", {
+=======
+
+  const handleReset = async () => {
+    fetch("https://cloth-store-backend-kruy.onrender.com", {
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,6 +34,7 @@ function ResetPassword() {
       }),
     })
       .then((response) => {
+<<<<<<< HEAD
         console.log("Enter the Fetch Method");
         console.log(response);
       })
@@ -38,6 +45,14 @@ function ResetPassword() {
     setTimeout(() => {
       navigate("/reset/email-sent");
     }, 2000);
+=======
+        console.log(response);
+      })
+      .catch((err) => {
+        alert("An error occurred. Please try again later.");
+      });
+    navigate("/reset/email-sent");
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
   };
 
   return (

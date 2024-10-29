@@ -14,7 +14,11 @@ function NewPassword() {
   };
 
   const handleNewPassword = () => {
+<<<<<<< HEAD
     fetch("https://cloth-store-backend-kruy.onrender.com/newpassword", {
+=======
+    fetch("https://cloth-store-backend-kruy.onrender.com", {
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,9 +31,13 @@ function NewPassword() {
       }),
     })
       .then((res) => {
+<<<<<<< HEAD
         setTimeout(() => {
           navigate("/login");
         }, 2000);
+=======
+        navigate("/login");
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
       })
       .catch((err) => {
         console.log(err);
@@ -37,7 +45,11 @@ function NewPassword() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="NewPasswordContainer">
+=======
+    <div className="container">
+>>>>>>> d82c1b802df7681c34dceb7fb8c1ab8b2f069075
       <div className="box">
         <h2>Add New Password</h2>
         <input
