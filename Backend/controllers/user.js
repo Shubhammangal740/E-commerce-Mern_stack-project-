@@ -93,23 +93,23 @@ exports.Postlogin = (req, res, next) => {
 
 exports.getFetchAllProdducts = async (req, res, next) => {
   try {
-    const cacheValue = await client.get("allProducts");
-    if (cacheValue) {
-      return res.json(JSON.parse(cacheValue));
-    } else {
-      const products = await Product.find({});
-      if (!products) {
-        const error = new Error("does not have any product");
-        error.statusCode = 404;
-        throw error;
-      }
-      await client.set("allProducts", JSON.stringify(products));
-      await client.expire("allProducts", 400);
-      return res.json({
-        message: "All Products Fetch Successfully",
-        data: products,
-      });
+    // const cacheValue = await client.get("allProducts");
+    // if (cacheValue) {
+    //   return res.json(JSON.parse(cacheValue));
+    // } else {
+    const products = await Product.find({});
+    if (!products) {
+      const error = new Error("does not have any product");
+      error.statusCode = 404;
+      throw error;
     }
+    // await client.set("allProducts", JSON.stringify(products));
+    // await client.expire("allProducts", 400);
+    return res.json({
+      message: "All Products Fetch Successfully",
+      data: products,
+    });
+    // }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
