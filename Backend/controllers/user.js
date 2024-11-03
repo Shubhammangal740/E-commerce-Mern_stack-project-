@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Order = require("../models/order");
+const client = require("../utils/redis-client");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Product = require("../models/product");
@@ -90,19 +91,25 @@ exports.Postlogin = (req, res, next) => {
   }
 };
 
-exports.getFetchAllProdducts = (req, res, next) => {
+exports.getFetchAllProdducts = async (req, res, next) => {
   try {
-    Product.find({}).then((products) => {
+    const cacheValue = await client.get("allProducts");
+    if (cacheValue) {
+      return res.json(JSON.parse(cacheValue));
+    } else {
+      const products = await Product.find({});
       if (!products) {
         const error = new Error("does not have any product");
         error.statusCode = 404;
         throw error;
       }
+      await client.set("allProducts", JSON.stringify(products));
+      await client.expire("allProducts", 400);
       res.json({
         message: "All Products Fetch Successfully",
         data: products,
       });
-    });
+    }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
