@@ -105,7 +105,7 @@ exports.getFetchAllProdducts = async (req, res, next) => {
       }
       await client.set("allProducts", JSON.stringify(products));
       await client.expire("allProducts", 400);
-      res.json({
+      return res.json({
         message: "All Products Fetch Successfully",
         data: products,
       });
